@@ -136,17 +136,10 @@ body::after {
 .rtag-decisions { background: rgba(240,192,64,0.12); color: var(--accent); }
 .rtag-questions { background: rgba(61,214,140,0.12); color: var(--success); }
 
-.textarea-container { border-bottom: 1px solid var(--border); }
 textarea { width: 100%; min-height: 160px; background: transparent; border: none; outline: none; resize: vertical; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1.8; color: var(--text); padding: 16px 18px; caret-color: var(--accent); }
 .input-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-top: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; gap: 8px; }
 .input-meta-txt { font-size: 11px; color: var(--muted); }
 
-.err-block { background: rgba(224,90,43,0.07); border: 1px solid rgba(224,90,43,0.2); border-radius: 8px; padding: 13px 16px; font-size: 12px; color: var(--accent2); display: none; margin: 14px; white-space: pre-wrap; }
-
-.toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: #000; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; padding: 11px 18px; border-radius: 8px; opacity: 0; transform: translateY(8px); transition: all 0.25s ease; pointer-events: none; z-index: 9998; }
-.toast.show { opacity: 1; transform: translateY(0); }
-
-/* Additional logic styles */
 .thinking-block { padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .thinking-dots { display: flex; gap: 5px; }
 .thinking-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--info); animation: tdot 1.2s ease infinite; }
@@ -154,7 +147,7 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 .thinking-dots span:nth-child(3) { animation-delay: 0.3s; }
 @keyframes tdot { 0%,60%,100% { transform:translateY(0); opacity:0.3; } 30% { transform:translateY(-7px); opacity:1; } }
 .thinking-label { font-size: 11px; color: var(--info); letter-spacing: 2px; text-transform: uppercase; }
-.tstep { opacity: 0; animation: stepIn 0.35s ease forwards; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.tstep { opacity: 0; animation: stepIn 0.35s ease forwards; font-size: 11px; color: var(--muted); text-align: center; }
 .tstep.done { color: var(--success); }
 @keyframes stepIn { from { opacity:0; transform:translateX(-6px); } to { opacity:1; transform:translateX(0); } }
 
@@ -165,12 +158,14 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 .fsec-body { display: none; padding: 12px 14px; }
 .fsec-body.open { display: block; }
 .fitem { display: flex; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; line-height: 1.7; color: #c8c4bc; align-items: flex-start; }
+.fdot { width: 5px; height: 5px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.fdot-j { background: var(--accent2); } .fdot-d { background: var(--accent); } .fdot-q { background: var(--success); } .fdot-c { background: var(--info); }
 .fsev { font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; margin-top: 3px; }
 .fsev-critical { background: rgba(224,90,43,0.2); color: var(--accent2); }
 .fsev-high { background: rgba(240,192,64,0.12); color: var(--accent); }
 .fsev-medium { background: rgba(61,214,140,0.1); color: var(--success); }
 
-.summary-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; margin: 16px; }
+.summary-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; }
 .summary-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 7px; }
 .summary-text { font-size: 12px; line-height: 1.8; color: #ccc; }
 
@@ -194,16 +189,16 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 .detail-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; }
 .detail-close { background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; color: var(--muted); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 12px; }
 
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: #000; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; padding: 11px 18px; border-radius: 8px; opacity: 0; transform: translateY(8px); transition: all 0.25s ease; pointer-events: none; z-index: 9998; }
+.toast.show { opacity: 1; transform: translateY(0); }
+
+.err-block { background: rgba(224,90,43,0.07); border: 1px solid rgba(224,90,43,0.2); border-radius: 8px; padding: 13px 16px; font-size: 12px; color: var(--accent2); display: none; margin: 14px; white-space: pre-wrap; }
+
 .dot-live { width: 7px; height: 7px; border-radius: 50%; background: var(--info); animation: pulse 1.5s infinite; display: inline-block; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 
-::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-
-@media (max-width: 800px) {
-  .sidebar { width: 200px; }
-  .stats-grid { grid-template-columns: repeat(2,1fr); }
-}
 </style>
 </head>
 <body>
@@ -225,31 +220,19 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
     <div id="projectNav"></div>
     <div class="nav-item" onclick="addProject()" style="color:var(--muted);font-size:11px;"><span class="nav-icon">+</span> New Project</div>
   </nav>
-  <div class="sidebar-footer">
-    <div class="plan-badge">
-      <div class="plan-name">PRO PLAN</div>
-      <div class="plan-desc">Unlimited records · Persistent vault · AI-powered</div>
-    </div>
-  </div>
 </aside>
 
 <main class="main">
   <div class="page active" id="page-dashboard">
     <div class="page-header">
-      <div><div class="page-title">Dashboard</div><div class="page-subtitle">Your institutional memory at a glance</div></div>
+      <div><div class="page-title">Dashboard</div><div class="page-subtitle">Institutional memory at a glance</div></div>
       <button class="btn btn-info" onclick="showPage('extractor')">+ New Extraction</button>
     </div>
     <div class="page-body">
       <div class="stats-grid" id="dashStats"></div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div class="card">
-          <div class="card-header"><div class="card-title">🕐 Recent Records</div></div>
-          <div id="recentRecords" style="padding:12px;"></div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">📁 Projects</div></div>
-          <div id="projectList" style="padding:12px;"></div>
-        </div>
+        <div class="card"><div class="card-header"><div class="card-title">🕐 Recent</div></div><div id="recentRecords" style="padding:12px;"></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">📁 Projects</div></div><div id="projectList" style="padding:12px;"></div></div>
       </div>
     </div>
   </div>
@@ -262,10 +245,7 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
     <div class="page-body">
       <div style="display:flex;flex-direction:column;gap:16px;">
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Session Transcript</div>
-            <button class="btn-ghost btn-sm" onclick="loadSample()">load sample →</button>
-          </div>
+          <div class="card-header"><div class="card-title">Session Transcript</div><button class="btn-ghost btn-sm" onclick="loadSample()">load sample →</button></div>
           <textarea id="transcriptInput" placeholder="Paste your AI conversation transcript here..." oninput="updateMeta()"></textarea>
           <div class="input-bar">
             <span class="input-meta-txt" id="inputMeta">0 words</span>
@@ -276,31 +256,28 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
           </div>
         </div>
         <div class="card" id="thinkingCard" style="display:none;">
-          <div class="card-header"><div class="card-title"><span class="dot-live"></span>&nbsp; Claude is analyzing...</div></div>
           <div class="thinking-block">
             <div class="thinking-dots"><span></span><span></span><span></span></div>
             <div class="thinking-label">Structural Analysis</div>
-            <div class="thinking-steps" id="thinkingSteps"></div>
+            <div id="thinkingSteps"></div>
           </div>
         </div>
         <div class="err-block" id="errBlock"></div>
         <div class="card" id="outputCard" style="display:none;">
-          <div class="card-header"><div class="card-title">🦴 Fossil Record</div><span style="font-size:10px;color:var(--muted);" id="extractMeta"></span></div>
+          <div class="card-header"><div class="card-title">🦴 Fossil Record</div><span id="extractMeta" style="font-size:10px;color:var(--muted);"></span></div>
           <div class="fossil-sections" id="fossilSections"></div>
           <div class="fossil-stats" id="fossilStats"></div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--border);">
-            <span style="font-size:11px;color:var(--muted);">Review above, then generate your re-entry prompt</span>
             <button class="btn btn-accent btn-sm" onclick="generatePrompt()">🚀 Generate Prompt</button>
           </div>
         </div>
         <div class="card" id="promptCard" style="display:none;">
-          <div class="card-header"><div class="card-title">Re-Entry Prompt</div><button class="btn btn-ghost btn-sm" onclick="copyPrompt()" style="color:var(--accent);border-color:rgba(240,192,64,0.3);">COPY</button></div>
-          <div class="prompt-bar"><div class="prompt-bar-label">// MVS Audit Contract Format</div></div>
+          <div class="card-header"><div class="card-title">Re-Entry Prompt</div><button class="btn btn-ghost btn-sm" onclick="copyPrompt()">COPY</button></div>
           <div class="prompt-content" id="promptContent"></div>
           <div class="save-form">
             <input class="save-input" id="recordName" placeholder="Name this record...">
             <select class="project-select" id="projectSelect"><option value="">No project</option></select>
-            <button class="btn btn-accent btn-sm" onclick="saveRecord()">💾 Save to Vault</button>
+            <button class="btn btn-accent btn-sm" onclick="saveRecord()">💾 Save</button>
           </div>
         </div>
       </div>
@@ -309,14 +286,12 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 
   <div class="page" id="page-vault">
     <div class="page-header">
-      <div><div class="page-title">Vault</div><div class="page-subtitle">Your persistent institutional memory</div></div>
-      <button class="btn btn-info" onclick="showPage('extractor')">+ New Record</button>
+      <div><div class="page-title">Vault</div><div class="page-subtitle">Persistent institutional memory</div></div>
     </div>
     <div class="page-body">
       <div class="vault-filters">
         <button class="filter-btn active" onclick="filterVault(this,'all')">All</button>
         <div id="projectFilters" style="display:inline-flex; gap:8px;"></div>
-        <div style="margin-left:auto;font-size:11px;color:var(--muted);" id="vaultCountLabel"></div>
       </div>
       <div class="records-grid" id="recordsGrid"></div>
     </div>
@@ -324,11 +299,8 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 </main>
 
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
-  <div class="detail-modal" id="detailModal">
-    <div class="detail-header">
-      <div class="detail-title" id="detailTitle"></div>
-      <button class="detail-close" onclick="closeDetailBtn()">✕ close</button>
-    </div>
+  <div class="detail-modal">
+    <div class="detail-header"><div class="detail-title" id="detailTitle"></div><button class="detail-close" onclick="closeDetailBtn()">✕ close</button></div>
     <div class="detail-body" id="detailBody"></div>
   </div>
 </div>
@@ -337,31 +309,31 @@ textarea { width: 100%; min-height: 160px; background: transparent; border: none
 
 <script>
 // ══════════════════════════════════════════════════════════
-//  ⚙️  CONFIGURATION
+//  ⚙️  CONFIGURATION & SAMPLE DATA
 // ══════════════════════════════════════════════════════════
 const WORKER_URL = 'https://fossil-record.jsnoddy.workers.dev';
 
+const SAMPLE = `User: Let's finalize the core architecture for Project Rigel.
+AI: The foundational constraint is hardware-level data sovereignty. All logic must remain on air-gapped, on-premise hardware without cloud handshakes.
+User: Good. What about the observer drift problem?
+AI: Observer drift is the dominant failure variable. In a closed offline system, accuracy can decouple from confidence. We need a periodic cold-baseline reset.
+User: Confirmed. Document the duress-mode requirement too.
+AI: Confirmed. Duress mode is a critical control surface. The system must default to conservative behavior under operator fatigue.`;
+
 // ══════════════════════════════════════════════════════════
-//  STORAGE
+//  STORAGE & STATE
 // ══════════════════════════════════════════════════════════
 function loadRecords() { try { return JSON.parse(localStorage.getItem('fossil_records_v1') || '[]'); } catch { return []; } }
 function saveRecords(r) { localStorage.setItem('fossil_records_v1', JSON.stringify(r)); }
-function loadProjects() {
-  try {
-    const p = JSON.parse(localStorage.getItem('fossil_projects_v1') || 'null');
-    return p || [{ id:'proj-rigel', name:'Project Rigel', color:'#4a9eff' }, { id:'proj-general', name:'General', color:'#f0c040' }];
-  } catch { return []; }
-}
-function saveProjects(p) { localStorage.setItem('fossil_projects_v1', JSON.stringify(p)); }
+function loadProjects() { try { return JSON.parse(localStorage.getItem('fossil_projects_v1') || 'null') || [{ id:'proj-rigel', name:'Project Rigel', color:'#4a9eff' }]; } catch { return []; } }
 
 let records = loadRecords();
 let projects = loadProjects();
 let currentFossil = null;
 let currentPrompt = '';
-let vaultFilter = 'all';
 
 // ══════════════════════════════════════════════════════════
-//  CORE LOGIC
+//  INTERFACE LOGIC
 // ══════════════════════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -369,6 +341,11 @@ function showPage(name) {
   document.getElementById('page-' + name).classList.add('active');
   if (name === 'dashboard') renderDashboard();
   if (name === 'vault') renderVault();
+}
+
+function loadSample() { 
+  document.getElementById('transcriptInput').value = SAMPLE; 
+  updateMeta(); 
 }
 
 function updateMeta() {
@@ -383,42 +360,30 @@ function clearExtractor() {
   currentFossil=null; currentPrompt=''; updateMeta();
 }
 
-const TSTEPS = ['Reading transcript structure...','Identifying load-bearing joints...','Flagging structural risks...','Extracting decisions...','Finding open questions...','Building Fossil Record...'];
-
-function animateThinking() {
-  const c = document.getElementById('thinkingSteps'); c.innerHTML=''; let i=0;
-  function next() { if(i>=TSTEPS.length)return; const d=document.createElement('div'); d.className='tstep'; d.textContent='→ '+TSTEPS[i]; c.appendChild(d); i++; setTimeout(next,650); }
-  next();
-}
-
+// ══════════════════════════════════════════════════════════
+//  AI EXTRACTION HANDSHAKE
+// ══════════════════════════════════════════════════════════
 async function runExtraction() {
   const transcript = document.getElementById('transcriptInput').value.trim();
   if (!transcript) { showToast('Paste a transcript first!'); return; }
+  
   const btn = document.getElementById('extractBtn');
   btn.disabled = true;
   document.getElementById('errBlock').style.display='none';
-  ['outputCard','promptCard'].forEach(id => document.getElementById(id).style.display='none');
   document.getElementById('thinkingCard').style.display='block';
-  animateThinking();
 
-  const systemPrompt = `You are a structural analysis AI trained in the Snoddy Method. Analyze transcripts and extract a Fossil Record. Return ONLY valid JSON: {"summary":"","decisions":[],"joints":[],"questions":[],"context":[],"primaryFailureVariable":""}`;
+  const systemPrompt = `Analyze transcripts and extract a Fossil Record JSON: {"summary":"","decisions":[],"joints":[],"questions":[],"context":[],"primaryFailureVariable":""}`;
 
   try {
     const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system: systemPrompt,
-        messages: [{ role: 'user', content: transcript }]
-      })
+      body: JSON.stringify({ system: systemPrompt, messages: [{ role: 'user', content: transcript }] })
     });
 
     const data = await res.json();
-    if (!res.ok || data.error) {
-       throw new Error(data.error?.message || data.error || 'Connection failed');
-    }
+    if (!res.ok || data.error) throw new Error(data.error?.message || data.error || 'Connection failed');
 
-    // Anthropic response format check
     const raw = data.content?.[0]?.text || '';
     currentFossil = JSON.parse(raw.replace(/```json|```/g,'').trim());
 
@@ -429,7 +394,7 @@ async function runExtraction() {
     document.getElementById('thinkingCard').style.display='none';
     btn.disabled=false;
     const e = document.getElementById('errBlock');
-    e.textContent = '⚠ ' + err.message + '\n\nCheck Worker Settings > Variables for your API Key.';
+    e.textContent = '⚠ ' + err.message;
     e.style.display='block';
   }
 }
@@ -437,9 +402,7 @@ async function runExtraction() {
 function renderFossil() {
   if (!currentFossil) return;
   document.getElementById('outputCard').style.display='block';
-  let html = `<div class="summary-card"><div class="summary-label">Summary</div><div class="summary-text">${currentFossil.summary}</div></div>`;
-  // Simple layout logic for fossil data
-  document.getElementById('fossilSections').innerHTML = html;
+  document.getElementById('fossilSections').innerHTML = `<div class="summary-card"><div class="summary-text">${currentFossil.summary}</div></div>`;
 }
 
 function generatePrompt() {
@@ -457,11 +420,6 @@ function saveRecord() {
 
 function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
-// Initialization
-function renderProjectNav() {
-  document.getElementById('projectNav').innerHTML = projects.map(p => `<div class="nav-item">● ${p.name}</div>`).join('');
-}
-renderProjectNav();
 showPage('dashboard');
 </script>
 </body>
