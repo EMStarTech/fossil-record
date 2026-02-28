@@ -261,6 +261,7 @@ textarea::placeholder { color: var(--muted); opacity: 0.5; }
     <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">⬡</span> Dashboard</div>
     <div class="nav-item" onclick="showPage('extractor')"><span class="nav-icon">🤖</span> AI Extractor <span class="nav-badge new">AI</span></div>
     <div class="nav-item" onclick="showPage('vault')"><span class="nav-icon">🗄</span> Vault <span class="nav-badge" id="vaultCount">0</span></div>
+    <div class="nav-item" onclick="showPage('howto')"><span class="nav-icon">📖</span> How It Works</div>
     <div class="nav-section-label">Projects</div>
     <div id="projectNav"></div>
     <div class="nav-item" onclick="addProject()" style="color:var(--muted);font-size:11px;"><span class="nav-icon">+</span> New Project</div>
@@ -374,6 +375,85 @@ Your API key is protected — it never appears in this page." oninput="updateMet
     </div>
   </div>
 
+  <!-- HOW IT WORKS -->
+  <div class="page" id="page-howto">
+    <div class="page-header">
+      <div><div class="page-title">How It Works</div><div class="page-subtitle">Everything you need to know to get started</div></div>
+    </div>
+    <div class="page-body">
+      <div style="max-width:720px;display:flex;flex-direction:column;gap:28px;">
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">🚀 The 5-Step Workflow</div></div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">1</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Paste your AI conversation</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Go to <strong style="color:var(--text);">AI Extractor</strong> in the sidebar. Copy your conversation from Claude, ChatGPT, Gemini — any AI platform — and paste it into the transcript box. It can be as long as you like.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">2</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Click AI Extract</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Claude reads your transcript like a structural engineer — analyzing what was decided, what is critical, and what is still unresolved. This usually takes 10-20 seconds depending on the length of your conversation.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">3</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Review your Fossil Record</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Your extracted Fossil Record appears with four sections — Joints, Decisions, Open Questions, and Context. Review them to make sure nothing important was missed. Click any section to expand it.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">4</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Generate your Re-Entry Prompt</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Click <strong style="color:var(--accent);">Generate Prompt</strong>. Fossil Record creates a compact, structured summary of everything that mattered — formatted specifically to brief an AI in a new session.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;padding:16px 0;">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">5</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Copy and paste into any AI</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Click <strong style="color:var(--accent);">COPY</strong>, open a new session in Claude, ChatGPT, Gemini — whatever you use — and paste your prompt. The AI instantly recovers full context and you pick up exactly where you left off.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">📖 What Do The Terms Mean?</div></div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(224,90,43,0.05);border:1px solid rgba(224,90,43,0.15);border-radius:8px;border-left:3px solid var(--accent2);">
+              <div style="font-size:20px;flex-shrink:0;">🔩</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--accent2);margin-bottom:5px;">Load-Bearing Joints</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">The structural foundations of your conversation — the key assumptions, dependencies, or constraints that everything else is built on. If a Joint is wrong, the whole plan can collapse. Think of them like the load-bearing walls in a building. <em style="color:var(--muted);">Example: "The entire project assumes the budget won't change before Q3."</em></div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(240,192,64,0.05);border:1px solid rgba(240,192,64,0.15);border-radius:8px;border-left:3px solid var(--accent);">
+              <div style="font-size:20px;flex-shrink:0;">📌</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--accent);margin-bottom:5px;">Decisions</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Things that were explicitly agreed, confirmed, or finalized during the conversation. These are done — no longer up for debate. They give the next session a clear starting point without re-litigating resolved issues. <em style="color:var(--muted);">Example: "Confirmed: LinkedIn is the primary channel for launch."</em></div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(61,214,140,0.05);border:1px solid rgba(61,214,140,0.15);border-radius:8px;border-left:3px solid var(--success);">
+              <div style="font-size:20px;flex-shrink:0;">❓</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--success);margin-bottom:5px;">Open Questions</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Things that were raised but not resolved — deferred decisions, unresolved debates, or items flagged for follow-up. These are the first things your next session should address. <em style="color:var(--muted);">Example: "Unresolved: Should the newsletter launch now or wait for 500 customers?"</em></div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(74,158,255,0.05);border:1px solid rgba(74,158,255,0.15);border-radius:8px;border-left:3px solid var(--info);">
+              <div style="font-size:20px;flex-shrink:0;">📋</div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--info);margin-bottom:5px;">Context</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Background information that shaped the conversation — facts, constraints, or situational details that the AI needs to understand to give relevant responses in the next session. <em style="color:var(--muted);">Example: "The client has a hard deadline of March 15th."</em></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">🗄 What Is The Vault?</div></div>
+          <div style="padding:20px;"><div style="font-size:12px;color:var(--muted2);line-height:1.9;">The Vault is your permanent library of Fossil Records. Every record you save is stored here and accessible anytime — even after you close the browser and come back days later.<br><br>After generating a re-entry prompt, give your record a name (like <em style="color:var(--text);">"Project X — Week 3 Strategy Session"</em>), choose a project, and click <strong style="color:var(--accent);">Save to Vault</strong>. From the Vault you can open any record, copy its prompt, or delete it when you no longer need it.</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">📁 How Do Projects Work?</div></div>
+          <div style="padding:20px;"><div style="font-size:12px;color:var(--muted2);line-height:1.9;">Projects are folders that organize your Fossil Records. If you're working on multiple ongoing efforts — a product launch, a research paper, a client engagement — create a separate project for each one.<br><br>To create a new project, click <strong style="color:var(--text);">+ New Project</strong> in the left sidebar. Give it a name and it appears in your sidebar and in the Vault filters. When saving a record, select the project from the dropdown to keep everything organized.</div></div>
+        </div>
+
+        <div style="background:rgba(240,192,64,0.06);border:1px solid rgba(240,192,64,0.2);border-radius:10px;padding:20px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="font-size:22px;">💡</div>
+          <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--accent);margin-bottom:6px;">Pro Tip — The Token Savings</div><div style="font-size:12px;color:#d4b060;line-height:1.9;">Instead of copy-pasting your entire previous conversation into a new session (which wastes thousands of tokens), use your Fossil Record re-entry prompt instead. In a real test, an 11,377 word conversation was reduced to a ~500 token prompt — a <strong>97% token reduction</strong> — without losing a single important idea.</div></div>
+        </div>
+
+        <div style="text-align:center;padding:10px 0 20px;">
+          <button class="btn btn-info" onclick="showPage('extractor')">🚀 Try It Now — Load Sample Transcript</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
@@ -392,9 +472,9 @@ Your API key is protected — it never appears in this page." oninput="updateMet
 // ══════════════════════════════════════════════════════════
 //  ⚙️  CONFIGURATION
 //  After you deploy your Cloudflare Worker, paste its URL here.
-//  It will look like: https://fossil-record.jsnoddy.workers.dev
+//  It will look like: https://fossil-record.YOUR-NAME.workers.dev
 // ══════════════════════════════════════════════════════════
-const WORKER_URL = 'https://fossil-record.jsnoddy.workers.dev';
+const WORKER_URL = 'https://fossil-record.YOUR-NAME.workers.dev';
 
 // ══════════════════════════════════════════════════════════
 //  STORAGE
@@ -404,7 +484,7 @@ function saveRecords(r) { localStorage.setItem('fossil_records_v1', JSON.stringi
 function loadProjects() {
   try {
     const p = JSON.parse(localStorage.getItem('fossil_projects_v1') || 'null');
-    return p || [{ id:'proj-rigel', name:'Project Rigel', color:'#4a9eff' }, { id:'proj-general', name:'General', color:'#f0c040' }];
+    return p || [{ id:'proj-general', name:'General', color:'#f0c040' }, { id:'proj-research', name:'Research', color:'#4a9eff' }];
   } catch { return []; }
 }
 function saveProjects(p) { localStorage.setItem('fossil_projects_v1', JSON.stringify(p)); }
@@ -614,25 +694,25 @@ function toggleFsec(h) { h.nextElementSibling.classList.toggle('open'); h.queryS
 // ══════════════════════════════════════════════════════════
 //  EXTRACTOR — calls YOUR Cloudflare Worker, not Anthropic directly
 // ══════════════════════════════════════════════════════════
-const SAMPLE = `User: Let's finalize the core architecture for Project Rigel before we move forward.
+const SAMPLE = `User: OK let's lock in the plan for the content marketing strategy before we lose this thread.
 
-AI: The foundational constraint is hardware-level data sovereignty. All logic must remain persistent on air-gapped, on-premise hardware without any cloud handshakes. This is non-negotiable given the deployment environment — social work case data cannot leave the secure perimeter.
+AI: Agreed. Based on everything we've discussed, the core decision is to lead with LinkedIn as the primary channel — your audience is there, you already have 1,500 followers, and long-form posts perform well for thought leadership in your space. That's confirmed.
 
-User: Good. What about the observer drift problem we flagged last week?
+User: Good. What about the posting cadence? We went back and forth on that.
 
-AI: Observer drift is the dominant failure variable. In a closed offline system with no external calibration, the observer's confidence can decouple from actual accuracy over time. This creates silent semantic degradation — the system becomes increasingly confident in progressively less accurate estimates. If this goes unchecked, the entire Pareto front gets miscalibrated and we're making unsafe high-confidence decisions without knowing it.
+AI: We landed on three posts per week as the target — Monday for industry insights, Wednesday for behind-the-scenes product updates, Friday for community engagement. The Monday slot is the load-bearing one. If you only do one post a week, it has to be Monday. That's where the decision-maker audience is most active.
 
-User: So what do we do about it?
+User: Right. And the content types we decided on?
 
-AI: Two mitigation strategies. First, implement a periodic cold-baseline reset: the observer audits a fixed known-good dataset to recalibrate confidence. Second, build an explicit drift detection signal that flags when uncertainty metrics diverge beyond threshold. I recommend both in combination. We should define the threshold values — that's still an open question.
+AI: Three formats confirmed: written thought leadership posts (no images needed), short video demos of the product in action, and repost-with-commentary on relevant industry news. The video demos are still unresolved — we haven't decided whether to do screen recordings or talking head style. That needs a decision before you start production.
 
-User: Noted. What about the autonomy-safety tradeoff? We deferred that last session.
+User: What about the newsletter? We keep deferring that.
 
-AI: Still unresolved. The core tension is that higher autonomy improves field utility in disconnected scenarios, but increases risk of unsafe high-confidence decisions. We agreed conceptually on a Pareto front approach but haven't defined the specific calibration point. We need the ethics board review before we can lock that down. That's a load-bearing dependency.
+AI: Still deferred. The open question is whether to launch it now and build the habit early, or wait until you hit 500 paying customers and have more case studies to share. The argument for waiting is stronger — newsletters need content and you don't have enough user stories yet. But this needs a final call. It's been deferred twice now.
 
-User: Document the duress-mode requirement too.
+User: Note that the brand voice guideline doc needs to be finished before we brief any contractors.
 
-AI: Confirmed. Duress mode is a critical control surface. When the operator is compromised — fatigue, time pressure, external threat — the system must default to conservative behavior. This is non-negotiable from a safety standpoint.`;
+AI: Confirmed and flagged as a hard dependency. No contractor briefings until the brand voice doc is complete. That document is blocking at least three parallel workstreams. It needs to be the next thing you finish.`;
 
 function loadSample() { document.getElementById('transcriptInput').value = SAMPLE; updateMeta(); }
 function updateMeta() {
