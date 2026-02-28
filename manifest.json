@@ -1,0 +1,40 @@
+{
+  "name": "Fossil Record — AI Session Memory",
+  "short_name": "Fossil Record",
+  "description": "Never lose your AI workflow. Extract structural intelligence from any AI conversation and re-enter with perfect context.",
+  "start_url": "/fossil-record/",
+  "display": "standalone",
+  "background_color": "#090a0d",
+  "theme_color": "#f0c040",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "business"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "AI Extractor",
+      "short_name": "Extract",
+      "description": "Extract a new Fossil Record",
+      "url": "/fossil-record/#extractor"
+    },
+    {
+      "name": "Vault",
+      "short_name": "Vault",
+      "description": "Open your record vault",
+      "url": "/fossil-record/#vault"
+    }
+  ]
+}
