@@ -1000,6 +1000,8 @@ function autoSavePrompt(prompt, fossilName) {
   updateLibraryCount();
   return entry;
 }
+
+function updateLibraryCount() {
   const lib = getPromptLibrary();
   const badge = document.getElementById('libraryCount');
   if (badge) badge.textContent = lib.length;
