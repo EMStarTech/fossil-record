@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fossil Record — Institutional Memory Vault</title>
+<title>Fossil Record — AI Session Memory</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f0c040">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fossil Record">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- SEO -->
+<meta name="description" content="Never lose your AI workflow. Extract structural intelligence from any AI conversation and re-enter with perfect context. 97% token reduction.">
+<meta property="og:title" content="Fossil Record — AI Session Memory">
+<meta property="og:description" content="Paste any AI conversation. Extract what mattered. Re-enter any session with perfect context.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://emstartech.github.io/fossil-record">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -21,7 +36,6 @@
   --success: #3dd68c;
   --info: #4a9eff;
   --danger: #e05a2b;
-  --insight: #b06eff;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -138,7 +152,6 @@ body::after {
 .rtag-joints { background: rgba(224,90,43,0.15); color: var(--accent2); }
 .rtag-decisions { background: rgba(240,192,64,0.12); color: var(--accent); }
 .rtag-questions { background: rgba(61,214,140,0.12); color: var(--success); }
-.rtag-insights { background: rgba(176,110,255,0.12); color: var(--insight); }
 .record-summary { font-size: 11px; color: var(--muted2); line-height: 1.7; margin-top: 8px; }
 .record-actions { display: flex; gap: 6px; margin-top: 10px; }
 
@@ -170,13 +183,12 @@ textarea::placeholder { color: var(--muted); opacity: 0.5; }
 .ftag-d { background: rgba(240,192,64,0.12); color: var(--accent); }
 .ftag-q { background: rgba(61,214,140,0.12); color: var(--success); }
 .ftag-c { background: rgba(74,158,255,0.1); color: var(--info); }
-.ftag-i { background: rgba(176,110,255,0.15); color: var(--insight); }
 .fsec-body { display: none; padding: 12px 14px; }
 .fsec-body.open { display: block; }
 .fitem { display: flex; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; line-height: 1.7; color: #c8c4bc; align-items: flex-start; }
 .fitem:last-child { border-bottom: none; }
 .fdot { width: 5px; height: 5px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
-.fdot-j { background: var(--accent2); } .fdot-d { background: var(--accent); } .fdot-q { background: var(--success); } .fdot-c { background: var(--info); } .fdot-i { background: var(--insight); }
+.fdot-j { background: var(--accent2); } .fdot-d { background: var(--accent); } .fdot-q { background: var(--success); } .fdot-c { background: var(--info); }
 .fsev { font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; margin-top: 3px; }
 .fsev-critical { background: rgba(224,90,43,0.2); color: var(--accent2); }
 .fsev-high { background: rgba(240,192,64,0.12); color: var(--accent); }
@@ -192,7 +204,7 @@ textarea::placeholder { color: var(--muted); opacity: 0.5; }
 .summary-label { font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 7px; }
 .summary-text { font-size: 12px; line-height: 1.8; color: #ccc; }
 
-.fossil-stats { display: grid; grid-template-columns: repeat(5,1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
+.fossil-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
 .fstat { background: var(--surface2); padding: 11px 14px; text-align: center; }
 .fstat-num { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; display: block; }
 .fstat-label { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 1px; display: block; }
@@ -264,6 +276,7 @@ textarea::placeholder { color: var(--muted); opacity: 0.5; }
     <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">⬡</span> Dashboard</div>
     <div class="nav-item" onclick="showPage('extractor')"><span class="nav-icon">🤖</span> AI Extractor <span class="nav-badge new">AI</span></div>
     <div class="nav-item" onclick="showPage('vault')"><span class="nav-icon">🗄</span> Vault <span class="nav-badge" id="vaultCount">0</span></div>
+    <div class="nav-item" onclick="showPage('library')"><span class="nav-icon">📚</span> Prompt Library <span class="nav-badge" id="libraryCount">0</span></div>
     <div class="nav-item" onclick="showPage('howto')"><span class="nav-icon">📖</span> How It Works</div>
     <div class="nav-section-label">Projects</div>
     <div id="projectNav"></div>
@@ -319,7 +332,6 @@ Claude will extract:
   🔩 Load-bearing joints & structural risks
   📌 Key decisions & commitments
   ❓ Open questions & unresolved items
-  💡 Key insights & breakthroughs
   📋 Critical context
 
 Your API key is protected — it never appears in this page." oninput="updateMeta()"></textarea>
@@ -379,6 +391,53 @@ Your API key is protected — it never appears in this page." oninput="updateMet
     </div>
   </div>
 
+  <!-- PROMPT LIBRARY -->
+  <div class="page" id="page-library">
+    <div class="page-header">
+      <div><div class="page-title">Prompt Library</div><div class="page-subtitle">Every re-entry prompt you've ever generated — saved automatically</div></div>
+      <button class="btn btn-accent" onclick="openStacker()">⚡ Stack Prompts</button>
+    </div>
+    <div class="page-body">
+
+      <!-- STACKER MODAL -->
+      <div id="stackerModal" style="display:none;position:fixed;inset:0;background:rgba(9,10,13,0.88);backdrop-filter:blur(6px);z-index:600;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:var(--surface);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:680px;max-height:85vh;overflow-y:auto;">
+          <div style="padding:24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;">⚡ Prompt Stacker</div>
+              <div style="font-size:11px;color:var(--muted2);margin-top:4px;">Select prompts to combine into one unified re-entry prompt</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="closeStacker()">✕</button>
+          </div>
+          <div style="padding:20px;">
+            <div id="stackerList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;max-height:300px;overflow-y:auto;"></div>
+            <button class="btn btn-accent" style="width:100%;" onclick="runStacker()">⚡ Generate Stacked Prompt</button>
+          </div>
+          <div id="stackerOutput" style="display:none;padding:0 20px 20px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:var(--accent);margin-bottom:8px;">STACKED RE-ENTRY PROMPT</div>
+            <div id="stackedPromptText" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:11px;color:var(--muted2);line-height:1.8;white-space:pre-wrap;max-height:300px;overflow-y:auto;font-family:'DM Mono',monospace;"></div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button class="btn btn-accent btn-sm" onclick="copyStackedPrompt()">📋 Copy Stacked Prompt</button>
+              <button class="btn btn-info btn-sm" onclick="saveStackedPrompt()">💾 Save to Library</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIBRARY EMPTY STATE -->
+      <div id="libraryEmpty" style="display:none;text-align:center;padding:80px 20px;">
+        <div style="font-size:48px;margin-bottom:16px;">📚</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;">No prompts saved yet</div>
+        <div style="font-size:12px;color:var(--muted2);margin-bottom:24px;">Every time you generate a re-entry prompt it will be saved here automatically</div>
+        <button class="btn btn-info" onclick="showPage('extractor')">🤖 Generate Your First Prompt</button>
+      </div>
+
+      <!-- LIBRARY GRID -->
+      <div id="libraryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;"></div>
+
+    </div>
+  </div>
+
   <!-- HOW IT WORKS -->
   <div class="page" id="page-howto">
     <div class="page-header">
@@ -396,11 +455,11 @@ Your API key is protected — it never appears in this page." oninput="updateMet
             </div>
             <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
               <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">2</div>
-              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Click AI Extract</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Claude reads your transcript like a structural engineer — analyzing what was decided, what is critical, what changed direction, and what is still unresolved. This usually takes 10-20 seconds depending on the length of your conversation.</div></div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Click AI Extract</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Claude reads your transcript like a structural engineer — analyzing what was decided, what is critical, and what is still unresolved. This usually takes 10-20 seconds depending on the length of your conversation.</div></div>
             </div>
             <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
               <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">3</div>
-              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Review your Fossil Record</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Your extracted Fossil Record appears with five sections — Joints, Decisions, Open Questions, Key Insights, and Context. Review them to make sure nothing important was missed. Click any section to expand it.</div></div>
+              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;margin-bottom:5px;">Review your Fossil Record</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Your extracted Fossil Record appears with four sections — Joints, Decisions, Open Questions, and Context. Review them to make sure nothing important was missed. Click any section to expand it.</div></div>
             </div>
             <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
               <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,0.15);border:1px solid rgba(74,158,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--info);flex-shrink:0;">4</div>
@@ -427,10 +486,6 @@ Your API key is protected — it never appears in this page." oninput="updateMet
             <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(61,214,140,0.05);border:1px solid rgba(61,214,140,0.15);border-radius:8px;border-left:3px solid var(--success);">
               <div style="font-size:20px;flex-shrink:0;">❓</div>
               <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--success);margin-bottom:5px;">Open Questions</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">Things that were raised but not resolved — deferred decisions, unresolved debates, or items flagged for follow-up. These are the first things your next session should address. <em style="color:var(--muted);">Example: "Unresolved: Should the newsletter launch now or wait for 500 customers?"</em></div></div>
-            </div>
-            <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(176,110,255,0.05);border:1px solid rgba(176,110,255,0.15);border-radius:8px;border-left:3px solid var(--insight);">
-              <div style="font-size:20px;flex-shrink:0;">💡</div>
-              <div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--insight);margin-bottom:5px;">Key Insights & Breakthroughs</div><div style="font-size:12px;color:var(--muted2);line-height:1.8;">The moments where the frame shifted — discoveries that changed the direction of the session. Not just what was decided, but the insight that made it load-bearing. These are preserved with enough specificity to carry their original force into the next session. <em style="color:var(--muted);">Example: "Realized local-only storage isn't a limitation — it's the core security feature for finance and crypto users."</em></div></div>
             </div>
             <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(74,158,255,0.05);border:1px solid rgba(74,158,255,0.15);border-radius:8px;border-left:3px solid var(--info);">
               <div style="font-size:20px;flex-shrink:0;">📋</div>
@@ -480,9 +535,9 @@ Your API key is protected — it never appears in this page." oninput="updateMet
 // ══════════════════════════════════════════════════════════
 //  ⚙️  CONFIGURATION
 //  After you deploy your Cloudflare Worker, paste its URL here.
-//  It will look like: https://fossil-record.jsnoddy.workers.dev
+//  It will look like: https://fossil-record.YOUR-NAME.workers.dev
 // ══════════════════════════════════════════════════════════
-const WORKER_URL = 'https://fossil-record.jsnoddy.workers.dev';
+const WORKER_URL = 'https://fossil-record.YOUR-NAME.workers.dev';
 
 // ══════════════════════════════════════════════════════════
 //  STORAGE
@@ -513,6 +568,7 @@ function showPage(name) {
   document.querySelectorAll('.nav-item').forEach(i => { if (i.textContent.toLowerCase().includes(name.slice(0,4))) i.classList.add('active'); });
   if (name === 'dashboard') renderDashboard();
   if (name === 'vault') renderVault();
+  if (name === 'library') renderLibrary();
 }
 
 // ══════════════════════════════════════════════════════════
@@ -521,6 +577,7 @@ function showPage(name) {
 const PROJECT_COLORS = ['#4a9eff','#f0c040','#3dd68c','#e05a2b','#b06eff','#ff6b9d'];
 
 function addProject() {
+  // Create inline modal instead of prompt() which is blocked on some browsers
   const existing = document.getElementById('projectModal');
   if (existing) existing.remove();
 
@@ -539,6 +596,7 @@ function addProject() {
   document.body.appendChild(modal);
   setTimeout(() => document.getElementById('projectNameInput')?.focus(), 50);
 
+  // Allow Enter key
   modal.querySelector('#projectNameInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') confirmAddProject();
     if (e.key === 'Escape') modal.remove();
@@ -638,7 +696,6 @@ function renderVault() {
           <span class="rtag rtag-joints">${r.fossil?.joints?.length||0} joints</span>
           <span class="rtag rtag-decisions">${r.fossil?.decisions?.length||0} dec</span>
           <span class="rtag rtag-questions">${r.fossil?.questions?.length||0} open</span>
-          ${(r.fossil?.insights?.length||0)>0?`<span class="rtag rtag-insights">${r.fossil.insights.length} insights</span>`:''}
         </div>
       </div>
       ${r.fossil?.summary?`<div class="record-summary">${r.fossil.summary}</div>`:''}
@@ -678,7 +735,6 @@ function openDetail(id) {
     {key:'joints',label:'🔩 Load-Bearing Joints',ftag:'ftag-j',fdot:'fdot-j',showSev:true},
     {key:'decisions',label:'📌 Decisions',ftag:'ftag-d',fdot:'fdot-d',showSev:true},
     {key:'questions',label:'❓ Open Questions',ftag:'ftag-q',fdot:'fdot-q',showSev:false},
-    {key:'insights',label:'💡 Key Insights & Breakthroughs',ftag:'ftag-i',fdot:'fdot-i',showSev:false},
     {key:'context',label:'📋 Context',ftag:'ftag-c',fdot:'fdot-c',showSev:false},
   ];
   secs.forEach(s => {
@@ -734,8 +790,7 @@ function clearExtractor() {
   currentFossil=null; currentPrompt=''; updateMeta();
 }
 
-// ── UPDATED: added "Capturing key insights & breakthroughs" step
-const TSTEPS = ['Reading transcript structure...','Identifying load-bearing joints...','Flagging structural risks...','Extracting decisions...','Finding open questions...','Capturing key insights & breakthroughs...','Assessing collapse potential...','Building Fossil Record...'];
+const TSTEPS = ['Reading transcript structure...','Identifying load-bearing joints...','Flagging structural risks...','Extracting decisions...','Finding open questions...','Assessing collapse potential...','Building Fossil Record...'];
 
 function animateThinking() {
   const c = document.getElementById('thinkingSteps'); c.innerHTML=''; let i=0;
@@ -754,7 +809,6 @@ async function runExtraction() {
   document.getElementById('thinkingCard').scrollIntoView({behavior:'smooth',block:'start'});
   animateThinking();
 
-  // ── UPDATED SYSTEM PROMPT: added insights field and breakthrough definition
   const systemPrompt = `You are a structural analysis AI trained in the Snoddy Method of session continuity. Analyze AI conversation transcripts and extract a Fossil Record — the institutional memory needed to re-enter the session without losing context.
 
 Return ONLY valid JSON with this structure:
@@ -763,16 +817,13 @@ Return ONLY valid JSON with this structure:
   "decisions": [{"text":"decision made","severity":"critical|high|medium"}],
   "joints": [{"text":"load-bearing dependency","severity":"critical|high|medium","collapseRisk":"what fails if wrong"}],
   "questions": [{"text":"unresolved item","severity":"high|medium"}],
-  "insights": [{"text":"breakthrough moment — a reframe or discovery that changed the strategic direction of the session, preserved with enough specificity to carry its original force into the next session"}],
   "context": [{"text":"critical background"}],
   "primaryFailureVariable": "single most critical risk"
 }
-
-A breakthrough insight is NOT a fact or decision. It is a reframe — a moment where understanding shifted and changed what was possible or how the problem was framed. Ask: did this insight change the direction or strategy of the session? If yes, it belongs in insights. Preserve the WHY behind the discovery, not just the WHAT.
-
 Return ONLY the JSON. No markdown, no explanation.`;
 
   try {
+    // ── THIS is the key difference: we call OUR worker, not Anthropic directly
     const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -801,14 +852,13 @@ Return ONLY the JSON. No markdown, no explanation.`;
 
 function renderFossil() {
   if (!currentFossil) return;
-  const total = ['joints','decisions','questions','insights','context'].reduce((a,k)=>a+(currentFossil[k]?.length||0),0);
+  const total = ['joints','decisions','questions','context'].reduce((a,k)=>a+(currentFossil[k]?.length||0),0);
   document.getElementById('extractMeta').textContent = `${total} items extracted`;
   document.getElementById('outputCard').style.display='block';
   const secs = [
     {key:'joints',label:'🔩 Load-Bearing Joints',ftag:'ftag-j',fdot:'fdot-j',showSev:true},
     {key:'decisions',label:'📌 Decisions & Commitments',ftag:'ftag-d',fdot:'fdot-d',showSev:true},
     {key:'questions',label:'❓ Open Questions',ftag:'ftag-q',fdot:'fdot-q',showSev:false},
-    {key:'insights',label:'💡 Key Insights & Breakthroughs',ftag:'ftag-i',fdot:'fdot-i',showSev:false},
     {key:'context',label:'📋 Context',ftag:'ftag-c',fdot:'fdot-c',showSev:false},
   ];
   let html = '';
@@ -821,24 +871,19 @@ function renderFossil() {
       <div class="fsec-body open">${items.map(item=>`<div class="fitem"><div class="fdot ${s.fdot}"></div><div style="flex:1;"><div>${item.text}</div>${item.collapseRisk?`<div class="fcollapse">↳ ${item.collapseRisk}</div>`:''}</div>${s.showSev&&item.severity?`<span class="fsev fsev-${item.severity}">${item.severity}</span>`:''}</div>`).join('')}</div></div>`;
   });
   document.getElementById('fossilSections').innerHTML = html;
-  // ── UPDATED: now 5 stats including insights
   document.getElementById('fossilStats').innerHTML = `
     <div class="fstat"><span class="fstat-num" style="color:var(--accent2);">${currentFossil.joints?.length||0}</span><span class="fstat-label">Joints</span></div>
     <div class="fstat"><span class="fstat-num" style="color:var(--accent);">${currentFossil.decisions?.length||0}</span><span class="fstat-label">Decisions</span></div>
     <div class="fstat"><span class="fstat-num" style="color:var(--success);">${currentFossil.questions?.length||0}</span><span class="fstat-label">Open Qs</span></div>
-    <div class="fstat"><span class="fstat-num" style="color:var(--insight);">${currentFossil.insights?.length||0}</span><span class="fstat-label">Insights</span></div>
     <div class="fstat"><span class="fstat-num" style="color:var(--info);">${currentFossil.context?.length||0}</span><span class="fstat-label">Context</span></div>`;
   document.getElementById('outputCard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ── UPDATED: generatePrompt now includes KEY INSIGHTS & BREAKTHROUGHS section
 function generatePrompt() {
   if (!currentFossil) return;
   const joints = (currentFossil.joints||[]).map((j,i)=>`   ${i+1}. [${(j.severity||'HIGH').toUpperCase()}] ${j.text}${j.collapseRisk?'\n      Risk: '+j.collapseRisk:''}`).join('\n');
   const decisions = (currentFossil.decisions||[]).map((d,i)=>`   ${i+1}. ${d.text}`).join('\n');
   const questions = (currentFossil.questions||[]).map((q,i)=>`   ${i+1}. ${q.text}`).join('\n');
-  const insights = (currentFossil.insights||[]).map((ins,i)=>`   ${i+1}. ${ins.text}`).join('\n');
-
   currentPrompt = `TASK CLASS: Technical engineering audit / failure-mode review.
 
 PROVENANCE: The following joints were developed in a prior session as design notes.
@@ -863,11 +908,6 @@ PRIMARY FAILURE VARIABLE
 CONFIRMED DECISIONS (context only)
 ─────────────────────────────────────────────
 ${decisions||'   [None identified]'}
-
-─────────────────────────────────────────────
-KEY INSIGHTS & BREAKTHROUGHS
-─────────────────────────────────────────────
-${insights||'   [None identified]'}
 
 ─────────────────────────────────────────────
 OPEN QUESTIONS (address if relevant)
@@ -895,6 +935,11 @@ If uncertain, enumerate risks and boundary conditions.
   document.getElementById('promptContent').textContent = currentPrompt;
   document.getElementById('promptCard').style.display='block';
   document.getElementById('promptCard').scrollIntoView({behavior:'smooth',block:'start'});
+
+  // ── AUTO-SAVE to Prompt Library
+  const recName = document.getElementById('recordName')?.value?.trim() || `Session — ${new Date().toLocaleDateString()}`;
+  autoSavePrompt(currentPrompt, recName);
+  showToast('Prompt generated & saved to Library! 📚');
 }
 
 function copyToClipboard(text, successMsg) {
@@ -935,8 +980,206 @@ function saveRecord() {
 
 function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
+// ── PROMPT LIBRARY ──────────────────────────────────────────
+function getPromptLibrary() { try { return JSON.parse(localStorage.getItem('fr-prompt-library')||'[]'); } catch(e) { return []; } }
+function savePromptLibrary(lib) { localStorage.setItem('fr-prompt-library', JSON.stringify(lib)); }
+
+function autoSavePrompt(prompt, fossilName) {
+  const lib = getPromptLibrary();
+  const entry = {
+    id: 'pl-' + Date.now(),
+    name: fossilName || `Session — ${new Date().toLocaleDateString()}`,
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+    timestamp: Date.now(),
+    wordCount: prompt.split(/\s+/).filter(Boolean).length,
+    prompt: prompt
+  };
+  lib.unshift(entry); // newest first
+  if (lib.length > 100) lib.pop(); // cap at 100
+  savePromptLibrary(lib);
+  updateLibraryCount();
+  return entry;
+}
+  const lib = getPromptLibrary();
+  const badge = document.getElementById('libraryCount');
+  if (badge) badge.textContent = lib.length;
+}
+
+function renderLibrary() {
+  const lib = getPromptLibrary();
+  const grid = document.getElementById('libraryGrid');
+  const empty = document.getElementById('libraryEmpty');
+  if (!grid) return;
+
+  if (lib.length === 0) {
+    grid.style.display = 'none';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+
+  grid.style.display = 'grid';
+  if (empty) empty.style.display = 'none';
+
+  grid.innerHTML = lib.map(entry => `
+    <div class="card" style="cursor:default;">
+      <div style="padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${entry.name}</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:4px;">${entry.date} · ${entry.wordCount} words</div>
+        </div>
+        <button onclick="deleteLibraryEntry('${entry.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;flex-shrink:0;padding:2px;">✕</button>
+      </div>
+      <div style="padding:12px 16px;background:var(--surface2);font-family:'DM Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6;height:80px;overflow:hidden;position:relative;">
+        ${entry.prompt.substring(0,200)}...
+        <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,var(--surface2));"></div>
+      </div>
+      <div style="padding:12px 16px;display:flex;gap:8px;">
+        <button class="btn btn-accent btn-sm" style="flex:1;" onclick="copyLibraryPrompt('${entry.id}')">📋 Copy</button>
+        <button class="btn btn-info btn-sm" style="flex:1;" onclick="loadLibraryPrompt('${entry.id}')">↩ Load</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function copyLibraryPrompt(id) {
+  const lib = getPromptLibrary();
+  const entry = lib.find(e => e.id === id);
+  if (entry) copyToClipboard(entry.prompt, 'Prompt copied! 📋');
+}
+
+function loadLibraryPrompt(id) {
+  const lib = getPromptLibrary();
+  const entry = lib.find(e => e.id === id);
+  if (!entry) return;
+  // Load into extractor transcript box
+  document.getElementById('transcriptInput').value = entry.prompt;
+  showPage('extractor');
+  showToast('Prompt loaded into Extractor! ↩');
+}
+
+function deleteLibraryEntry(id) {
+  let lib = getPromptLibrary();
+  lib = lib.filter(e => e.id !== id);
+  savePromptLibrary(lib);
+  updateLibraryCount();
+  renderLibrary();
+  showToast('Deleted from library');
+}
+
+// ── STACKER ──────────────────────────────────────────────────
+let stackedResult = '';
+
+function openStacker() {
+  const lib = getPromptLibrary();
+  const modal = document.getElementById('stackerModal');
+  const list = document.getElementById('stackerList');
+  document.getElementById('stackerOutput').style.display = 'none';
+
+  if (lib.length === 0) {
+    showToast('No saved prompts yet — generate some first!');
+    return;
+  }
+
+  list.innerHTML = lib.map(entry => `
+    <label style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;">
+      <input type="checkbox" value="${entry.id}" style="accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${entry.name}</div>
+        <div style="font-size:10px;color:var(--muted2);">${entry.date} · ${entry.wordCount} words</div>
+      </div>
+    </label>
+  `).join('');
+
+  modal.style.display = 'flex';
+}
+
+function closeStacker() {
+  document.getElementById('stackerModal').style.display = 'none';
+}
+
+function runStacker() {
+  const lib = getPromptLibrary();
+  const checked = [...document.querySelectorAll('#stackerList input[type=checkbox]:checked')].map(cb => cb.value);
+
+  if (checked.length < 2) {
+    showToast('Select at least 2 prompts to stack!');
+    return;
+  }
+
+  const selected = checked.map(id => lib.find(e => e.id === id)).filter(Boolean);
+
+  stackedResult = `═══════════════════════════════════════════════
+FOSSIL RECORD — STACKED RE-ENTRY PROMPT
+Generated: ${new Date().toLocaleString()}
+Sessions stacked: ${selected.length}
+═══════════════════════════════════════════════
+
+` + selected.map((entry, i) => `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SESSION ${i+1}: ${entry.name}
+Saved: ${entry.date}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${entry.prompt}
+
+`).join('') + `
+═══════════════════════════════════════════════
+END OF STACKED PROMPT — Fossil Record (Snoddy Method v3.0)
+═══════════════════════════════════════════════`;
+
+  document.getElementById('stackedPromptText').textContent = stackedResult;
+  document.getElementById('stackerOutput').style.display = 'block';
+  document.getElementById('stackerOutput').scrollIntoView({behavior:'smooth'});
+  showToast(`${selected.length} prompts stacked! ⚡`);
+}
+
+function copyStackedPrompt() {
+  if (stackedResult) copyToClipboard(stackedResult, 'Stacked prompt copied! ⚡');
+}
+
+function saveStackedPrompt() {
+  if (!stackedResult) return;
+  const checked = [...document.querySelectorAll('#stackerList input[type=checkbox]:checked')].length;
+  autoSavePrompt(stackedResult, `Stacked Prompt (${checked} sessions) — ${new Date().toLocaleDateString()}`);
+  closeStacker();
+  renderLibrary();
+  showToast('Stacked prompt saved to Library! 📚');
+}
+
 renderProjectNav();
 renderDashboard();
+updateLibraryCount();
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/fossil-record/service-worker.js')
+      .then(() => console.log('Fossil Record PWA ready'))
+      .catch(err => console.log('SW registration failed:', err));
+  });
+}
+
+// ── PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show install button in sidebar footer
+  const footer = document.querySelector('.sidebar-footer');
+  if (footer && !document.getElementById('installBtn')) {
+    const btn = document.createElement('button');
+    btn.id = 'installBtn';
+    btn.className = 'btn btn-ghost btn-sm';
+    btn.style.cssText = 'width:100%;margin-top:10px;color:var(--info);border-color:rgba(74,158,255,0.3);font-size:11px;';
+    btn.innerHTML = '📲 Install App';
+    btn.onclick = () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        btn.remove();
+      });
+    };
+    footer.appendChild(btn);
+  }
+});
 </script>
 </body>
 </html>
