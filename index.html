@@ -1350,7 +1350,7 @@ function downloadJSON(data, filename) {
   URL.revokeObjectURL(url);
 }
 
- const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
 // ── PROMPT LIBRARY ──────────────────────────────────────────
 function getPromptLibrary() { try { return JSON.parse(localStorage.getItem('fr-prompt-library')||'[]'); } catch(e) { return []; } }
