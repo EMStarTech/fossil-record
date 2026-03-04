@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fossil Record — AI Session Memory v4</title>
+<title>Fossil Record — AI Session Memory v4.5</title>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
@@ -317,7 +317,7 @@ textarea.profile-input { min-height: 80px; resize: vertical; }
     <div>
       <div class="logo-text">FOSSIL <span>RECORD</span></div>
       <div class="logo-sub">Snoddy Method</div>
-      <div class="logo-version">Version 4</div>
+      <div class="logo-version">Version 4.5</div>
     </div>
   </div>
   <nav class="sidebar-nav">
@@ -461,7 +461,10 @@ Your User Profile (Relational Pre-Caching) will be appended automatically if set
   <div class="page" id="page-library">
     <div class="page-header">
       <div><div class="page-title">Prompt Library</div><div class="page-subtitle">Every re-entry prompt you've ever generated — saved automatically</div></div>
-      <button class="btn btn-accent" onclick="openStacker()">⚡ Stack Prompts</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost" onclick="exportAllPrompts()" style="color:var(--success);border-color:rgba(61,214,140,0.25);font-size:12px;">⬇ Export All</button>
+        <button class="btn btn-accent" onclick="openStacker()">⚡ Stack Prompts</button>
+      </div>
     </div>
     <div class="page-body">
 
@@ -685,8 +688,8 @@ Your User Profile (Relational Pre-Caching) will be appended automatically if set
 
 <script>
 // ══════════════════════════════════════════════════════════
-//  VERSION: Fossil Record v4
-//  New in v4: Node Drift Detector, User Profile (Relational Pre-Caching)
+//  VERSION: Fossil Record v4.5
+//  New in v4.5: Individual prompt/record export to JSON, Export All vault backup
 // ══════════════════════════════════════════════════════════
 const WORKER_URL = 'https://fossil-record.jsnoddy.workers.dev';
 
@@ -959,6 +962,7 @@ function renderVault() {
       ${r.fossil?.summary?`<div class="record-summary">${r.fossil.summary}</div>`:''}
       <div class="record-actions">
         <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();copyRecordPrompt('${r.id}')">Copy Prompt</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--success);border-color:rgba(61,214,140,0.2);" onclick="event.stopPropagation();exportRecord('${r.id}')">⬇ Export</button>
         <button class="btn btn-ghost btn-sm" style="color:var(--accent2);border-color:rgba(224,90,43,0.2);" onclick="event.stopPropagation();deleteRecord('${r.id}')">Delete</button>
       </div>
     </div>`;
@@ -1281,7 +1285,72 @@ function saveRecord() {
   renderProjectNav();
 }
 
-function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+function exportRecord(id) {
+  const rec = records.find(r => r.id === id);
+  if (!rec) return;
+  const exportData = {
+    name: rec.name,
+    date: rec.date,
+    exportedAt: new Date().toISOString(),
+    source: 'Fossil Record v4.5 — Snoddy Method',
+    fossil: rec.fossil,
+    prompt: rec.prompt,
+    projectId: rec.projectId || null
+  };
+  const filename = (rec.name || 'fossil-record').replace(/[^a-z0-9\-_\s]/gi, '').replace(/\s+/g, '-').toLowerCase() + '.json';
+  downloadJSON(exportData, filename);
+  showToast('Record exported as ' + filename + ' ⬇');
+}
+
+function exportLibraryPrompt(id) {
+  const lib = getPromptLibrary();
+  const entry = lib.find(e => e.id === id);
+  if (!entry) return;
+  const exportData = {
+    name: entry.name,
+    date: entry.date,
+    exportedAt: new Date().toISOString(),
+    source: 'Fossil Record v4.5 — Snoddy Method',
+    wordCount: entry.wordCount,
+    prompt: entry.prompt
+  };
+  const filename = (entry.name || 'prompt').replace(/[^a-z0-9\-_\s]/gi, '').replace(/\s+/g, '-').toLowerCase() + '.json';
+  downloadJSON(exportData, filename);
+  showToast('Prompt exported as ' + filename + ' ⬇');
+}
+
+function exportAllPrompts() {
+  const lib = getPromptLibrary();
+  if (!lib.length) { showToast('No prompts to export yet!'); return; }
+  const exportData = {
+    exportedAt: new Date().toISOString(),
+    source: 'Fossil Record v4.5 — Snoddy Method',
+    totalPrompts: lib.length,
+    prompts: lib.map(e => ({
+      name: e.name,
+      date: e.date,
+      wordCount: e.wordCount,
+      prompt: e.prompt
+    }))
+  };
+  const filename = 'fossil-record-library-' + new Date().toISOString().split('T')[0] + '.json';
+  downloadJSON(exportData, filename);
+  showToast('All ' + lib.length + ' prompts exported! ⬇');
+}
+
+function downloadJSON(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
 // ── PROMPT LIBRARY ──────────────────────────────────────────
 function getPromptLibrary() { try { return JSON.parse(localStorage.getItem('fr-prompt-library')||'[]'); } catch(e) { return []; } }
@@ -1337,6 +1406,7 @@ function renderLibrary() {
       </div>
       <div style="padding:12px 16px;display:flex;gap:8px;">
         <button class="btn btn-accent btn-sm" style="flex:1;" onclick="copyLibraryPrompt('${entry.id}')">📋 Copy</button>
+        <button class="btn btn-ghost btn-sm" style="flex:1;color:var(--success);border-color:rgba(61,214,140,0.2);" onclick="exportLibraryPrompt('${entry.id}')">⬇ Export</button>
         <button class="btn btn-info btn-sm" style="flex:1;" onclick="loadLibraryPrompt('${entry.id}')">↩ Load</button>
       </div>
     </div>
