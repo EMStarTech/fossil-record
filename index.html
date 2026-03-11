@@ -1963,7 +1963,15 @@ async function handlePdfFile(file) {
     if (!window.pdfjsLib) {
       pdfLog('Loading PDF parser...');
       await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
-      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+    // Set worker — use fake worker if CDN is blocked by tracking prevention
+    if (window.pdfjsLib) {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      } catch(e) {
+        pdfLog('Worker CDN blocked — using fallback mode (no worker thread)');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+      }
     }
 
     pdfProgress(15, 'Parsing PDF...');
@@ -1991,11 +1999,24 @@ async function handlePdfFile(file) {
     } else {
       pdfLog('Single-pass extraction — loading into extractor');
       pdfProgress(90, 'Loading into extractor...');
-      document.getElementById('transcriptInput').value = fullText;
-      updateMeta();
-      pdfProgress(100, 'Complete');
-      showToast('PDF loaded into extractor! 📄');
-      setTimeout(() => { progress.style.display = 'none'; }, 2000);
+      // Store text first, then navigate to extractor page so textarea is in DOM
+      window._pendingPdfText = fullText;
+      showPage('extractor');
+      // Wait one frame for DOM to render before writing
+      setTimeout(() => {
+        const ta = document.getElementById('transcriptInput');
+        if (ta) {
+          ta.value = window._pendingPdfText || '';
+          window._pendingPdfText = null;
+          updateMeta();
+          pdfProgress(100, 'Complete');
+          showToast('PDF loaded into extractor! 📄');
+          setTimeout(() => { progress.style.display = 'none'; }, 2000);
+        } else {
+          pdfLog('Error: extractor textarea not found after page switch');
+          pdfProgress(0, 'Error');
+        }
+      }, 150);
     }
 
   } catch(err) {
