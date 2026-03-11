@@ -95,6 +95,18 @@ body::after {
 .chunk-bar { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.3s ease; width: 0%; }
 .chunk-status { font-size: 11px; color: var(--muted2); }
 .chunk-log { font-size: 10px; color: var(--muted); margin-top: 8px; max-height: 80px; overflow-y: auto; line-height: 1.8; }
+.savepath-log { background: #0a0f0a; border: 1px solid rgba(61,214,140,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 12px; display: none; }
+.savepath-log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.savepath-log-title { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--success); letter-spacing: 1px; }
+.savepath-log-clear { font-size: 10px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: 'DM Mono', monospace; }
+.savepath-log-clear:hover { color: var(--text); }
+.savepath-log-entries { font-size: 10px; font-family: 'DM Mono', monospace; max-height: 140px; overflow-y: auto; line-height: 2; }
+.savepath-entry { display: flex; gap: 10px; }
+.savepath-entry .sp-time { color: var(--muted); flex-shrink: 0; }
+.savepath-entry .sp-path-interactive { color: var(--info); }
+.savepath-entry .sp-path-background { color: var(--success); }
+.savepath-entry .sp-path-datalayer { color: var(--accent); }
+.savepath-entry .sp-path-guard { color: var(--danger); font-weight: bold; }
 
 .sidebar-nav { padding: 12px 10px; flex: 1; }
 
@@ -488,6 +500,15 @@ Your User Profile (Relational Pre-Caching) will be appended automatically if set
               </div>
               <div class="chunk-bar-wrap"><div class="chunk-bar" id="chunkBar"></div></div>
               <div class="chunk-log" id="chunkLog"></div>
+            </div>
+
+            <!-- SAVE-PATH RUNTIME LOG — Atlas verification layer -->
+            <div class="savepath-log" id="savepathLog">
+              <div class="savepath-log-header">
+                <span class="savepath-log-title">⬡ SAVE-PATH RUNTIME LOG</span>
+                <button class="savepath-log-clear" onclick="clearSavePathLog()">clear</button>
+              </div>
+              <div class="savepath-log-entries" id="savepathEntries"></div>
             </div>
           </div>
         </div>
@@ -1722,8 +1743,11 @@ function savePromptLibrary(lib) { localStorage.setItem('fr-prompt-library', JSON
 function autoSavePrompt(prompt, fossilName) {
   // GUARD: enforce interactive-only context
   if (typeof document === 'undefined' || !document.getElementById('nameModalOverlay')) {
+    console.error('[Fossil Record v6][SAVE-PATH] GUARD TRIGGERED — autoSavePrompt called outside interactive context. Use backgroundSavePrompt() for background extraction paths.');
     throw new Error('[Fossil Record v6] autoSavePrompt called outside interactive context. Use backgroundSavePrompt() for background extraction paths.');
   }
+  console.log('[Fossil Record v6][SAVE-PATH] autoSavePrompt → INTERACTIVE path — modal will fire', { fossilName });
+  savepathUILog('interactive', 'autoSavePrompt → INTERACTIVE path — modal firing', { name: fossilName || 'default' });
   const defaultName = fossilName && !fossilName.startsWith('Session —') ? fossilName : `Session — ${new Date().toLocaleDateString()}`;
   promptForName(prompt, defaultName, function(finalName) {
     _doSavePrompt(prompt, finalName);
@@ -1736,11 +1760,16 @@ function backgroundSavePrompt(prompt, autoName) {
   const name = autoName && autoName.trim()
     ? autoName.trim()
     : `PDF Extract — ${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})}`;
+  console.log('[Fossil Record v6][SAVE-PATH] backgroundSavePrompt → BACKGROUND path — NO modal, NO UI event', { name, wordCount: prompt.split(/\s+/).filter(Boolean).length });
+  savepathUILog('background', 'backgroundSavePrompt → BACKGROUND path — NO modal fired', { name, words: prompt.split(/\s+/).filter(Boolean).length });
   return _doSavePrompt(prompt, name, { background: true });
 }
 
 function _doSavePrompt(prompt, name, opts) {
   // DATA LAYER: pure write — no UI dependencies except optional toast
+  const isBackground = !!(opts && opts.background);
+  console.log('[Fossil Record v6][SAVE-PATH] _doSavePrompt → DATA LAYER executing', { name, background: isBackground, wordCount: prompt.split(/\s+/).filter(Boolean).length });
+  savepathUILog('datalayer', '_doSavePrompt → DATA LAYER write', { name, background: isBackground });
   const lib = getPromptLibrary();
   const entry = {
     id: 'pl-' + Date.now(),
@@ -1865,6 +1894,31 @@ function deleteLibraryEntry(id) {
   updateLibraryCount();
   renderLibrary();
   showToast('Deleted from library');
+}
+
+// ── SAVE-PATH RUNTIME LOG (Atlas verification layer) ─────────
+function savepathUILog(type, message, detail) {
+  const panel = document.getElementById('savepathLog');
+  const entries = document.getElementById('savepathEntries');
+  if (!panel || !entries) return;
+  panel.style.display = 'block';
+  const time = new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const cls = {
+    'interactive': 'sp-path-interactive',
+    'background': 'sp-path-background',
+    'datalayer': 'sp-path-datalayer',
+    'guard': 'sp-path-guard'
+  }[type] || '';
+  const detailStr = detail ? ` · ${Object.entries(detail).map(([k,v])=>`${k}: ${v}`).join(', ')}` : '';
+  entries.innerHTML += `<div class="savepath-entry"><span class="sp-time">${time}</span><span class="${cls}">${message}${detailStr}</span></div>`;
+  entries.scrollTop = entries.scrollHeight;
+}
+
+function clearSavePathLog() {
+  const entries = document.getElementById('savepathEntries');
+  if (entries) entries.innerHTML = '';
+  const panel = document.getElementById('savepathLog');
+  if (panel) panel.style.display = 'none';
 }
 
 // ── PDF INGESTION ENGINE v6.0 ─────────────────────────────────
