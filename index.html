@@ -1723,7 +1723,7 @@ function downloadJSON(data, filename) {
   URL.revokeObjectURL(url);
 }
 
-function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+function showToast(msg) { const t=document.getElementById('toast'); if (!t) return; t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
 
 // ── PROMPT LIBRARY ──────────────────────────────────────────
 function getPromptLibrary() { try { return JSON.parse(localStorage.getItem('fr-prompt-library')||'[]'); } catch(e) { return []; } }
@@ -2188,5 +2188,6 @@ window.addEventListener('beforeinstallprompt', e => {
   }
 });
 </script>
+<div id="toast" class="toast"></div>
 </body>
 </html>
