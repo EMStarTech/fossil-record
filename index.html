@@ -529,9 +529,21 @@ Your User Profile (Relational Pre-Caching) will be appended automatically if set
           <div class="card-header"><div class="card-title">🦴 Fossil Record</div><span style="font-size:10px;color:var(--muted);" id="extractMeta"></span></div>
           <div class="fossil-sections" id="fossilSections"></div>
           <div class="fossil-stats" id="fossilStats"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--border);">
-            <span style="font-size:11px;color:var(--muted);">Review above, then generate your re-entry prompt</span>
-            <button class="btn btn-accent btn-sm" onclick="generatePrompt()">🚀 Generate Prompt</button>
+          <div style="border-top:1px solid var(--border);padding:14px 16px;background:rgba(240,192,64,0.03);">
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;">
+              <div style="flex-shrink:0;margin-top:2px;">
+                <span style="display:inline-block;background:rgba(240,192,64,0.15);border:1px solid rgba(240,192,64,0.3);border-radius:4px;padding:2px 7px;font-size:9px;letter-spacing:1px;color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;">PI ONLY</span>
+              </div>
+              <div style="flex:1;">
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--accent);margin-bottom:3px;">Field 6 &#8212; PI Carry Forward</div>
+                <div style="font-size:10px;color:var(--muted2);line-height:1.7;margin-bottom:8px;">Optional. Populate before generating if critical items must travel to the next session that the extraction may not have captured. Leave blank if nothing requires explicit carry-forward.</div>
+                <textarea id="piCarryForward" placeholder="e.g. Ring 3 boundary holds &#8212; no Rigel hardware in next output. DIA rubric threshold bands still unresolved &#8212; address at sprint open..." style="width:100%;min-height:72px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;padding:10px 12px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text);resize:vertical;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(240,192,64,0.4)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:11px;color:var(--muted);">Review above, then generate your re-entry prompt</span>
+              <button class="btn btn-accent btn-sm" onclick="generatePrompt()">🚀 Generate Prompt</button>
+            </div>
           </div>
         </div>
 
@@ -1432,6 +1444,7 @@ function clearExtractor() {
   document.getElementById('transcriptInput').value = '';
   ['outputCard','promptCard','thinkingCard'].forEach(id => document.getElementById(id).style.display='none');
   document.getElementById('errBlock').style.display='none';
+  const pcf = document.getElementById('piCarryForward'); if (pcf) pcf.value = '';
   currentFossil=null; currentPrompt=''; updateMeta();
 }
 
@@ -1576,6 +1589,12 @@ function generatePrompt() {
   const domainFlags = Array.isArray(meta.domain_flags) && meta.domain_flags.length
     ? meta.domain_flags.join(', ')
     : '[not set]';
+  // PI Carry Forward — read from UI input (PI-populated only, never auto-generated)
+  const piCarryForwardEl = document.getElementById('piCarryForward');
+  const piCarryForwardVal = piCarryForwardEl ? piCarryForwardEl.value.trim() : '';
+  const piCarryForwardDisplay = piCarryForwardVal
+    ? piCarryForwardVal
+    : '[not set — PI populate at session close if critical items must travel]';
   const metadataBlock = `─────────────────────────────────────────────
 FOSSIL RECORD METADATA STANDARD (v7.0)
 ─────────────────────────────────────────────
@@ -1584,7 +1603,7 @@ FOSSIL RECORD METADATA STANDARD (v7.0)
    domain_flags:       ${domainFlags}
    temporal_weighting: ${meta.temporal_weighting || 'Tn > Tn-1 (newest session takes precedence)'}
    protocol_alignment: ${meta.protocol_alignment || 'Snoddy Method v7.0'}
-   pi_carry_forward:   ${meta.pi_carry_forward || '[not set — PI populate at session close if critical items must travel]'}
+   pi_carry_forward:   ${piCarryForwardDisplay}
 
 `;
 
