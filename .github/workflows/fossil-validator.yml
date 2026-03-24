@@ -1,0 +1,68 @@
+name: Fossil Standard Validator
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate-fossil:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Extract Reasoning Trace
+        id: extract
+        run: |
+          EXTRACTED=$(echo "${{ github.event.pull_request.body }}" | sed -n '/<fossil-record>/,/<\/fossil-record>/p' | sed '1d;$d')
+          echo "fossil_json=$EXTRACTED" >> $GITHUB_OUTPUT
+
+      - name: Execute Governance Gate
+        run: |
+          FOSSIL_JSON='${{ steps.extract.outputs.fossil_json }}'
+
+          if [[ -z "$FOSSIL_JSON" || "$FOSSIL_JSON" == "null" ]]; then
+            echo "::error::No Fossil metadata detected. A valid reasoning declaration is required for merge."
+            exit 1
+          fi
+
+          if ! echo "$FOSSIL_JSON" | jq -e . >/dev/null 2>&1; then
+            echo "::error::Malformed Fossil metadata. Valid JSON structure is required for merge."
+            exit 1
+          fi
+
+          BLACKLIST=("TBD" "PENDING" "NULL" "NONE" "PLACEHOLDER" "N/A" "UNKNOWN")
+
+          normalize() {
+            printf '%s' "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:lower:]' '[:upper:]'
+          }
+
+          for key in artifact_type stack_type protocol_alignment; do
+            val=$(echo "$FOSSIL_JSON" | jq -r --arg k "$key" '.[$k]')
+            NORMALIZED=$(normalize "$val")
+
+            if [[ -z "$NORMALIZED" || "$NORMALIZED" == "NULL" ]]; then
+              echo "::error::Empty or whitespace-only value detected in required field: $key."
+              exit 1
+            fi
+
+            for blocked in "${BLACKLIST[@]}"; do
+              if [[ "$NORMALIZED" == "$blocked" ]]; then
+                echo "::error::Semantic placeholder detected in $key: '$val'. Descriptive context is required."
+                exit 1
+              fi
+            done
+          done
+
+          echo "Fossil Standard Validated. Reasoning trace attached to deployment cycle."
+
+      - name: Post PR Comment
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Fossil Standard Validated. Reasoning trace attached to deployment cycle.\n\nFull analysis available in Triadic Fossil."
+            })
