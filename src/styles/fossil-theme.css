@@ -1,0 +1,127 @@
+/**
+ * Fossil Dashboard — UI Token Baseline
+ * Locked: March 24, 2026 | PI Decision | Snoddy Method v7.3
+ * Protocol Alignment: Fossil Standard v1.0.1-Hardened
+ *
+ * GOVERNANCE NOTE:
+ * These tokens are locked design system constants.
+ * No token may be modified without PI authorization and triadic review.
+ * Any change constitutes a versioned update requiring a new file commit.
+ */
+
+:root {
+
+  /* ─────────────────────────────────────────
+   * NODE COLORS — Fossil Map Zone 1
+   * ───────────────────────────────────────── */
+
+  /* Aligned node — protocol_alignment matches v1.0.1 */
+  --color-fn-aligned: #185FA5;
+  --color-fn-aligned-label: #B5D4F4;
+
+  /* Prior protocol node — legacy alignment values */
+  --color-fn-prior: #1D9E75;
+  --color-fn-prior-label: #9FE1CB;
+
+  /* Low temporal weight node — TW 1 to 3 */
+  --color-fn-low-weight: #888780;
+  --color-fn-low-weight-label: #F1EFE8;
+
+  /* Neutral fallback — non-deviation state */
+  --color-fn-neutral: #888780;
+
+  /* ─────────────────────────────────────────
+   * DEVIATION — Amber ring indicator
+   * Locked: PI Decision March 24, 2026
+   * ───────────────────────────────────────── */
+  --color-fn-deviation: #EF9F27;
+  --color-fn-deviation-border: #BA7517;
+
+  /* ─────────────────────────────────────────
+   * GHOST CLOUD — Historical density layer
+   * Non-interactive. No tooltip. No data exposure.
+   * ───────────────────────────────────────── */
+  --opacity-ghost-cloud: 0.12;
+  --color-ghost-cloud: rgba(136, 135, 128, 0.12);
+
+  /* ─────────────────────────────────────────
+   * DRIFT PANEL — Zone 2
+   * pointer-events: none enforced at component level
+   * ───────────────────────────────────────── */
+  --color-drift-signal-active: #EF9F27;
+  --color-drift-signal-bg: #FAEEDA;
+  --color-drift-signal-text: #633806;
+
+  /* ─────────────────────────────────────────
+   * CTA — Conversion anchor
+   * Locked copy: "Full analysis available in Triadic Fossil."
+   * Three placements only. No fourth placement authorized.
+   * ───────────────────────────────────────── */
+  --color-upgrade-bg: #E6F1FB;
+  --color-upgrade-border: #B5D4F4;
+  --color-upgrade-text: #185FA5;
+
+  /* ─────────────────────────────────────────
+   * TYPOGRAPHY
+   * ───────────────────────────────────────── */
+  --color-text-primary: #2c2c2a;
+  --color-text-secondary: #888780;
+  --color-text-subtle: #888780;
+
+  /* ─────────────────────────────────────────
+   * BACKGROUNDS
+   * ───────────────────────────────────────── */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f1efe8;
+  --color-bg-dashboard: #f5f5f3;
+
+  /* ─────────────────────────────────────────
+   * BORDERS
+   * ───────────────────────────────────────── */
+  --color-border-default: #d3d1c7;
+  --color-border-subtle: #d3d1c7;
+
+  /* ─────────────────────────────────────────
+   * NODE SIZING — Temporal weight tiers
+   * Size implies weight. No numeric label on production nodes.
+   * ───────────────────────────────────────── */
+  --node-diameter-high: 42px;    /* TW 8 to 10 */
+  --node-diameter-moderate: 28px; /* TW 4 to 7  */
+  --node-diameter-low: 14px;     /* TW 1 to 3  */
+
+  /* Deviation ring width — locked */
+  --node-deviation-ring: 3px;
+
+  /* ─────────────────────────────────────────
+   * DWELL TIMER — Locked PI Decision March 24, 2026
+   * Use DWELL_TIMER_MS constant in src/constants/ui.ts
+   * Do not inline this value anywhere in component code.
+   * ───────────────────────────────────────── */
+  /* Reference: DWELL_TIMER_MS = 1500 */
+
+  /* ─────────────────────────────────────────
+   * ZERO STATES
+   * Neutral strings — never empty, never broken
+   * ───────────────────────────────────────── */
+  /* No data:    "No reasoning traces recorded in this period."  */
+  /* No drift:   "No drift signals active this period."          */
+  /* Low activity: "Limited activity recorded in this period."   */
+
+  /* ─────────────────────────────────────────
+   * BORDER RADIUS
+   * ───────────────────────────────────────── */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-node: 50%;
+
+}
+
+/**
+ * RING 3 SILENCE NOTICE
+ * No token in this file references scoring logic,
+ * fragility index, DIA rubric, handshake logic,
+ * or any Snoddy Method internal architecture.
+ * Any addition of such tokens is a Ring 3 violation
+ * and requires immediate PI review.
+ */
