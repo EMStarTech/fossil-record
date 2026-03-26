@@ -1,11 +1,11 @@
 /**
  * Fossil Dashboard — TraceNode Component
- * Locked: March 25, 2026 | PI Decision | Snoddy Method v7.3
+ * Commit 3 Update — March 25, 2026 | PI Decision | Snoddy Method v7.3
  *
  * GOVERNANCE NOTE:
  * Hover state consumed exclusively through FossilRegistryProvider context.
- * No mixed prop/context pattern. Single control path per Atlas decision.
- * Observation without interpretation enforced by construction.
+ * Single control path per Atlas decision.
+ * data-testid attributes locked for Atlas Matrix test stability.
  * Ring 3 silence: No scoring fields, no derived metrics.
  */
 
@@ -48,8 +48,9 @@ export const TraceNode: React.FC<TraceNodeProps> = memo(({ mappedTrace }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      style={{ cursor: mappedTrace.pr_url ? 'pointer' : 'default' }}
+      data-testid="trace-node"
       aria-label={`${mappedTrace.artifact_type} - ${mappedTrace.stack_type}`}
+      style={{ cursor: mappedTrace.pr_url ? 'pointer' : 'default' }}
     >
       <circle
         className={`fossil-node${mappedTrace.is_deviation ? ' fossil-node--deviation' : ''}`}
@@ -63,6 +64,7 @@ export const TraceNode: React.FC<TraceNodeProps> = memo(({ mappedTrace }) => {
           y={mappedTrace.y - 32}
           width={160}
           height={80}
+          data-testid="fossil-tooltip-container"
           style={{ pointerEvents: 'none' }}
         >
           <div style={{
