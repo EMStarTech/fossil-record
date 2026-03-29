@@ -1,0 +1,82 @@
+/**
+ * ShiftChangeBriefing Component Styles
+ * Zone 3 — March 29, 2026 | PI Decision | Snoddy Method v7.3
+ *
+ * GOVERNANCE NOTE:
+ * All values reference locked tokens from fossil-theme.css only.
+ * No hardcoded colors, spacing, or typography values.
+ * This file is the component surface layer for Zone 3 only.
+ * fossil-theme.css remains the canonical token and shared utility layer.
+ *
+ * Ring 3 silence: No prohibited terminology in any class name,
+ * comment, or style value.
+ */
+
+.shift-briefing-root {
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md, 16px);
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-default);
+  color: var(--color-text-primary);
+  border-radius: var(--border-radius-md);
+  width: 320px;
+}
+
+.shift-briefing-header {
+  margin-bottom: 12px;
+}
+
+.shift-briefing-content {
+  margin: 8px 0;
+}
+
+.shift-briefing-cta {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 0.5px solid var(--color-border-default);
+}
+
+.fossil-heading-small {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.fossil-text-secondary {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.fossil-text-mono {
+  font-size: 12px;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+  font-family: var(--fossil-font-mono, monospace);
+}
+
+.fossil-text-muted {
+  font-size: 12px;
+  color: var(--color-text-subtle);
+}
+
+.fossil-list-clean {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.fossil-list-item-briefing {
+  font-size: 11px;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+.fossil-cta-locked {
+  font-size: 10px;
+  color: var(--color-upgrade-text);
+  font-style: italic;
+}
