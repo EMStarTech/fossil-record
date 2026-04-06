@@ -1,5 +1,5 @@
-# 🦴 Fossil Record
-### AI Session Continuity Manager — Built on the Snoddy Method
+# Fossil Record
+### AI Session Continuity Manager -> Built on the Snoddy Method
 
 [![Live App](https://img.shields.io/badge/Live%20App-emstartech.github.io%2Ffossil--record-f0c040?style=flat-square&logo=github)](https://emstartech.github.io/fossil-record)
 [![Get Pro](https://img.shields.io/badge/Get%20Pro-Gumroad-e05a2b?style=flat-square)](https://emstartech.gumroad.com/l/fossil-record-pro)
@@ -16,7 +16,7 @@ You're deep into a complex AI session. Important decisions. Real momentum. Then 
 
 ## What It Does
 
-Paste any AI conversation transcript. Fossil Record uses Claude AI to extract the structural intelligence — then generates a **Minimum Viable Stimulus re-entry prompt** you can paste into any AI to pick up exactly where you left off.
+Paste any AI conversation transcript. Fossil Record uses Claude AI to extract the structural intelligence -> then generates a **Minimum Viable Stimulus re-entry prompt** you can paste into any AI to pick up exactly where you left off.
 
 | Without Fossil Record | With Fossil Record |
 |---|---|
@@ -29,13 +29,13 @@ Paste any AI conversation transcript. Fossil Record uses Claude AI to extract th
 
 ## Features
 
-- 🤖 **AI Extraction** — Claude reads your transcript like a structural engineer
-- 🔩 **Load-Bearing Joints** — identifies what actually matters
-- 📌 **Key Decisions** — captures confirmed commitments
-- ❓ **Open Questions** — flags unresolved items
-- 🗄 **Persistent Vault** — saves records across sessions
-- 📁 **Projects** — organize records by project
-- 🚀 **Re-Entry Prompts** — paste into any AI platform
+- 🤖 **AI Extraction** —> Claude reads your transcript like a structural engineer
+- 🔩 **Load-Bearing Joints** —>identifies what actually matters
+- 📌 **Key Decisions** —> captures confirmed commitments
+- ❓ **Open Questions** —> flags unresolved items
+- 🗄 **Persistent Vault** —> saves records across sessions
+- 📁 **Projects** —> organize records by project
+- 🚀 **Re-Entry Prompts** —> paste into any AI platform
 
 ---
 
@@ -46,14 +46,14 @@ Paste any AI conversation transcript. Fossil Record uses Claude AI to extract th
 3. Claude identifies load-bearing joints, decisions, and open questions
 4. Review your Fossil Record
 5. Generate your re-entry prompt
-6. Paste into any new AI session — Claude, ChatGPT, Gemini, anything
+6. Paste into any new AI session -> Claude, ChatGPT, Gemini, anything
 ```
 
 ---
 
 ## Built On
 
-**The Snoddy Method** — a session continuity framework developed by J. Snoddy, PMP, DSW Candidate at the University of Southern California. The method addresses episodic volatility in large language models through structured institutional memory protocols.
+**The Snoddy Method** -> a session continuity framework developed by J. Snoddy, PMP, CPMAI, DSW Candidate at the University of Southern California. The method addresses episodic volatility in large language models through structured institutional memory protocols.
 
 ---
 
@@ -73,13 +73,13 @@ Full vault, unlimited extractions, project organization.
 
 ## Tech Stack
 
-- Vanilla HTML/CSS/JS — no framework dependencies
-- Cloudflare Workers — secure API proxy
-- Anthropic Claude API — AI extraction engine
-- GitHub Pages — hosting
-- localStorage — persistent vault
+- Vanilla HTML/CSS/JS -> no framework dependencies
+- Cloudflare Workers -> secure API proxy
+- Anthropic Claude API -> AI extraction engine
+- GitHub Pages -> hosting
+- localStorage -> persistent vault
 
 ---
 
-*Built with the Triadic AI Method — Claude, Gemini, and ChatGPT working in concert.*
-*"Without memory, learning is fragile."* 🦴
+*Built with the Triadic AI Method. Claude, Gemini, and ChatGPT working in concert.*
+*"Without memory, learning is fragile."*
